@@ -5,7 +5,7 @@ using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using WebApp.Models;
-using RealEstate.DataAccess;
+using WebApp.DataAccess;
 using System.Configuration;
 using WebApp.ModelBase;
 
@@ -71,6 +71,46 @@ namespace WebApp.DataAccess
             return insertedID;
 
         }
+       
+        public List<AdvertResidential> ReadAdvertResidentials(string query)
+        {
+            List<AdvertResidential> advertResidentials = new List<AdvertResidential>();
+            SqlCommand cmd = new SqlCommand(query, con);
+            IDataReader reader;
+            try
+            {
+                ConnectDB();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    advertResidentials.Add(
+
+                        new AdvertResidential {
+                            AdvertiseId = int.Parse(reader["Id"].ToString()),
+                            PublishDate = DateTime.Parse(reader["PublishDate"].ToString()),
+                            IsActive = bool.Parse(reader["IsActive"].ToString()),
+                            Title = reader["Age"].ToString(),
+                            Explaination = reader["Explaination"].ToString(),
+                            UserId = int.Parse(reader["User"].ToString()),
+                            
+                            ResidentalId = int.Parse(reader["ResidentalId"].ToString()),
+                            AdvertType = (AdvertType)short.Parse(reader["AdvertType"].ToString())
+                        }
+                        
+                        );
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                DisconnectDB();
+            }
+            return advertResidentials;
+        }
+
         public List<Residential> ReadResidentials(string query)
         {
             List<Residential> residentials = new List<Residential>();
@@ -95,7 +135,6 @@ namespace WebApp.DataAccess
                             Furnished = bool.Parse(reader["Furnished"].ToString()),
                             AddressId = int.Parse(reader["AddressID"].ToString()),
                             ResidentialType = (ResidentialType)short.Parse(reader["ResidentalType"].ToString()),
-
                         }
                         );
                 }
@@ -192,6 +231,25 @@ namespace WebApp.DataAccess
 
             }
             return commercials;
+        }
+        public int Delete(string query)
+        {
+            SqlCommand cmd = new SqlCommand(query, con);
+            int deletedId = -1;
+            try
+            {
+                ConnectDB();
+                deletedId = cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                return deletedId;
+            }
+            finally
+            {
+                DisconnectDB();
+            }
+            return deletedId;
         }
 
         public bool Execute(string query)

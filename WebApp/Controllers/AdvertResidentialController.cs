@@ -14,16 +14,39 @@ namespace WebApp.Controllers
         // GET: AdvertResidential
         public ActionResult Index()
         {
-            Residential house = new Residential {
-                RealEstateId = 1, Square=150, Furnished=true, Balcony=true,
-                 Age=10, Heating= HeatingType.CentralHeating
+            AdvertResidentialDal advertiesment = new AdvertResidentialDal(new ResidentialDal());
+
+
+            Residential house = new Residential
+            {
+
+                Square = 150,
+                Furnished = true,
+                Balcony = true,
+                Age = 10,
+                Heating = HeatingType.CentralHeating
             };
-            AdvertResidential add = new AdvertResidential { AdvertiseId = 1, RealEstate=house
+            AdvertResidential add = new AdvertResidential
+            {
+
+                PublishDate = DateTime.Now,
+                IsActive = true,
+                Title = "asdasdasd",
+                UserId = 1,
+                RealEstate = house
             };
-            ResidentialDal residential = new ResidentialDal();      
-           
+            Console.WriteLine("-----------------------------------");
+
+            Console.WriteLine("--------aaa---------------------------");
+            advertiesment.Create(add);
+            Console.WriteLine("---------------vvvv--------------------");
+
+
+
+
+
             //ViewBag.resid = residential.Select()[0].ToString()+ residential.Select()[1].ToString()+ residential.Select()[2].ToString();
-            return View(add);
+            return View();
         }
 
         // GET: AdvertResidential/Details/5

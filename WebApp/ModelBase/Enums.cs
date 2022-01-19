@@ -45,4 +45,10 @@ namespace WebApp.ModelBase
         Manifacturing
 
     }
+    public enum AdvertType
+    {
+        Residential,
+        Commercial,
+        Land
+    }
 }

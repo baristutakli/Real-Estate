@@ -9,7 +9,7 @@ namespace WebApp.Models
     public class AdvertLand : IAdvert
     {
         public int AdvertiseId { get ; set ; }
-        public DateTime Date { get ; set ; }
+        public DateTime PublishDate { get ; set ; }
         public bool IsActive { get ; set ; }
         public string Title { get ; set ; }
         public string Explaination { get ; set ; }
