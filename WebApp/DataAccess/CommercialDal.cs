@@ -28,12 +28,12 @@ namespace WebApp.DataAccess
             object insertedsId = DbTools.Connection.Create(query);
             return insertedsId;
         }
-        public List<Commercial> GetCommercial()
-        {
-            string query = "select * from Commercials";
+        //public List<Commercial> GetCommercial()
+        //{
+        //    string query = "select * from Commercials";
 
-            return DbTools.Connection.ReadCommercials(query);
-        }
+        //    return DbTools.Connection.ReadCommercials(query);
+        //}
         public Commercial GetCommercialById(int id)
         {
             string query = $"select * from Commercials where ID ={id};";

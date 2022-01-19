@@ -11,8 +11,8 @@ namespace ConsoleApp1
         {
             Console.WriteLine("Hello World!");
 
-                AdvertResidentialDal advertResidentialDal = new AdvertResidentialDal(new ResidentialDal());
-            //ResidentialDal residentialDal = new ResidentialDal();
+               // AdvertResidentialDal advertResidentialDal = new AdvertResidentialDal(new ResidentialDal());
+            ResidentialDal residentialDal = new ResidentialDal();
             //foreach (var item in residentialDal.GetResidential())
             //{
             //    Console.WriteLine(item.Age);
@@ -45,30 +45,68 @@ namespace ConsoleApp1
             //});
             //residentialDal.Delete(2008);
 
-             //AdvertResidentialDal advertResidentialDal = new AdvertResidentialDal(residentialDal);
+            AdvertResidentialDal advertResidentialDal = new AdvertResidentialDal(residentialDal);
 
-            //advertResidentialDal.Create(new AdvertResidential { PublishDate=DateTime.Now, IsActive=true, Title="Merhaba", Explaination="OOOO kral", 
-            //    UserId=1,RealEstate =new Residential {
+            advertResidentialDal.Delete(
+                new AdvertResidential
+                {
+                    AdverticeId=1008,
+                    PublishDate = DateTime.Now,
+                    IsActive = true,
+                    Title = "Merhaba",
+                    Explaination = "OOOO kral ooooo",
+                    UserId = 1,
+                    RealEstate = new Residential
+                    {
+                        RealEstateId = 2014,
+                        SellType = ModelBase.SellType.ForRent,
+                        Age = 12,
+                        Balcony = true,
+                        FloorNumber = 10,
+                        Furnished = true,
+                        Heating = ModelBase.HeatingType.Gas,
+                        ResidentialType = ModelBase.ResidentialType.Flat,
+                        Square = 100,
+                        AddressId = 1
+
+                    },
+                    AdvertType = AdvertType.Residential
+                }
+
+                ); 
+
+
+            //advertResidentialDal.Create(new AdvertResidential
+            //{
+            //    PublishDate = DateTime.Now,
+            //    IsActive = true,
+            //    Title = "Merhaba",
+            //    Explaination = "OOOO kral ooooo",
+            //    UserId = 1,
+            //    RealEstate = new Residential
+            //    {
             //        SellType = ModelBase.SellType.ForRent,
-            //        Age = 6,
+            //        Age = 12,
             //        Balcony = true,
-            //        FloorNumber = 6,
+            //        FloorNumber = 10,
             //        Furnished = true,
             //        Heating = ModelBase.HeatingType.Gas,
             //        ResidentialType = ModelBase.ResidentialType.Flat,
             //        Square = 100,
             //        AddressId = 1
 
-            //    }, AdvertType=AdvertType.Residential
+            //    },
+            //    AdvertType = AdvertType.Residential
             //});
-
             
-            foreach (var item in advertResidentialDal.GetAdvertResidentials())
-            {
-                Console.WriteLine("title"+item.Title+item.RealEstate.Heating+item.RealEstate.Square+"---"+item.RealEstate.SellType);
-            }
+           // Console.WriteLine("---"+advertResidentialDal.GetResidentialById(1010).IsActive);
 
-           // Console.WriteLine("++++" + Convert.ToInt16(SellType.ForRent));
+            //foreach (var item in advertResidentialDal.GetAdvertResidentials())
+            //{
+            //    Console.WriteLine("title"+item.Title+item.RealEstate.Heating+item.RealEstate.Square+"---"+item.RealEstate.SellType);
+            //}
+
+            // Console.WriteLine("++++" + Convert.ToInt16(SellType.ForRent));
             //foreach (var item in residentialDal.GetResidential())
             //{
             //    Console.WriteLine(item.Age);

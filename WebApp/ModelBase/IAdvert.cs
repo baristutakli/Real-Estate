@@ -10,7 +10,7 @@ namespace WebApp.ModelBase
 {
     public interface IAdvert
     {
-        int AdvertiseId { get; set; }
+        int AdverticeId { get; set; }
         DateTime PublishDate { get; set; }
         bool IsActive { get; set; }
         string Title { get; set; }

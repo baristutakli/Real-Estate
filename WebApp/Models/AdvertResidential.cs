@@ -10,7 +10,7 @@ namespace WebApp.Models
     
     public class AdvertResidential : IAdvert
     {
-        public int AdvertiseId { get; set; }
+        public int AdverticeId { get; set; }
        
         public DateTime PublishDate { get; set; }
         public bool IsActive { get; set; }

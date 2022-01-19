@@ -9,18 +9,25 @@ using WebApp.DataAccess;
 using System.Configuration;
 using WebApp.ModelBase;
 
+
 namespace WebApp.DataAccess
 {
     public class DbTools
     {
-        static string strConnection = ConfigurationManager.ConnectionStrings["Db_Emlak"].ConnectionString;
+
+        static string strConnection = @"Server=(localdb)\MSSQLLocalDB; Database=Db_Emlak;Trusted_Connection=true;";
         public SqlConnection con = new SqlConnection(strConnection);
+
+        public ResidentialDal residentialDal { get { return new ResidentialDal(); } set { residentialDal = value; } }
+
+
         private static DbTools _Con { get; set; }
         public static DbTools Connection
         {
             get
             {
                 if (_Con == null)
+
                     _Con = new DbTools();
                 return _Con;
             }
@@ -53,16 +60,18 @@ namespace WebApp.DataAccess
         }
         public object Create(string query)
         {
-            SqlCommand cmd = new SqlCommand(query, con);
+            SqlCommand cmd;
             object insertedID = -1;
             try
             {
+                cmd = new SqlCommand(query, con);
                 ConnectDB();
+                Console.WriteLine("bağlandı");
                 insertedID = cmd.ExecuteScalar();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Console.WriteLine("HATA LOGU Yaz.");
+                Console.WriteLine("HATA LOGU Yaz." + ex);
             }
             finally
             {
@@ -71,9 +80,10 @@ namespace WebApp.DataAccess
             return insertedID;
 
         }
-       
+
         public List<AdvertResidential> ReadAdvertResidentials(string query)
         {
+
             List<AdvertResidential> advertResidentials = new List<AdvertResidential>();
             SqlCommand cmd = new SqlCommand(query, con);
             IDataReader reader;
@@ -85,18 +95,74 @@ namespace WebApp.DataAccess
                 {
                     advertResidentials.Add(
 
-                        new AdvertResidential {
-                            AdvertiseId = int.Parse(reader["Id"].ToString()),
+                        new AdvertResidential
+                        {
+                            AdverticeId = int.Parse(reader["AdverticeId"].ToString()),
                             PublishDate = DateTime.Parse(reader["PublishDate"].ToString()),
                             IsActive = bool.Parse(reader["IsActive"].ToString()),
-                            Title = reader["Age"].ToString(),
-                            Explaination = reader["Explaination"].ToString(),
-                            UserId = int.Parse(reader["User"].ToString()),
-                            
-                            ResidentalId = int.Parse(reader["ResidentalId"].ToString()),
-                            AdvertType = (AdvertType)short.Parse(reader["AdvertType"].ToString())
+                            Title = reader["Title"].ToString(),
+                            Explaination = reader["Explanation"].ToString(),
+                            UserId = int.Parse(reader["UserId"].ToString()),
+
+                            ResidentalId = int.Parse(reader["ResidentialId"].ToString()),
+                            AdvertType = (AdvertType)short.Parse(reader["AdvertType"].ToString()),
+
                         }
-                        
+
+                        );
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                DisconnectDB();
+            }
+            return advertResidentials;
+        }
+        public List<AdvertResidential> ReadAdvertices(string query)
+        {
+
+            List<AdvertResidential> advertResidentials = new List<AdvertResidential>();
+            SqlCommand cmd = new SqlCommand(query, con);
+            IDataReader reader;
+            try
+            {
+                ConnectDB();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    advertResidentials.Add(
+
+                        new AdvertResidential
+                        {
+                            AdverticeId = int.Parse(reader["AdverticeId"].ToString()),
+                            PublishDate = DateTime.Parse(reader["PublishDate"].ToString()),
+                            IsActive = bool.Parse(reader["IsActive"].ToString()),
+                            Title = reader["Title"].ToString(),
+                            Explaination = reader["Explanation"].ToString(),
+                            UserId = int.Parse(reader["UserId"].ToString()),
+                            RealEstate = new Residential
+                            {
+                                RealEstateId = int.Parse(reader["ResidentialId"].ToString()),
+                                SellType = (SellType)Convert.ToInt16(reader["SellType"].ToString()),
+                                Square = Convert.ToDouble(reader["Area"].ToString()),
+                                Age = Convert.ToInt16(reader["Age"].ToString()),
+                                FloorNumber = Convert.ToInt16(reader["FloorNumber"].ToString()),
+                                Heating = (HeatingType)Convert.ToInt16(reader["Heating"].ToString()),
+                                Balcony = bool.Parse(reader["Balcony"].ToString()),
+                                Furnished = bool.Parse(reader["Furnished"].ToString()),
+                                AddressId = int.Parse(reader["AddressId"].ToString()),
+                                ResidentialType = (ResidentialType)Convert.ToInt16(reader["ResidentialType"].ToString())
+                            },
+
+                            ResidentalId = int.Parse(reader["ResidentialId"].ToString()),
+                            AdvertType = (AdvertType)short.Parse(reader["AdvertType"].ToString()),
+
+                        }
+
                         );
                 }
             }
@@ -111,6 +177,8 @@ namespace WebApp.DataAccess
             return advertResidentials;
         }
 
+
+
         public List<Residential> ReadResidentials(string query)
         {
             List<Residential> residentials = new List<Residential>();
@@ -118,14 +186,17 @@ namespace WebApp.DataAccess
             IDataReader reader;
             try
             {
+
+
                 ConnectDB();
+
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     residentials.Add(
                         new Residential
                         {
-                            RealEstateId = int.Parse(reader["Id"].ToString()),
+                            RealEstateId = int.Parse(reader["ResidentialId"].ToString()),
                             SellType = (SellType)short.Parse(reader["SellType"].ToString()),
                             Square = double.Parse(reader["Square"].ToString()),
                             Age = short.Parse(reader["Age"].ToString()),
@@ -133,8 +204,8 @@ namespace WebApp.DataAccess
                             Heating = (HeatingType)short.Parse(reader["Heating"].ToString()),
                             Balcony = bool.Parse(reader["Balcony"].ToString()),
                             Furnished = bool.Parse(reader["Furnished"].ToString()),
-                            AddressId = int.Parse(reader["AddressID"].ToString()),
-                            ResidentialType = (ResidentialType)short.Parse(reader["ResidentalType"].ToString()),
+                            AddressId = int.Parse(reader["AddressId"].ToString()),
+                            ResidentialType = (ResidentialType)short.Parse(reader["ResidentialType"].ToString()),
                         }
                         );
                 }
@@ -232,25 +303,7 @@ namespace WebApp.DataAccess
             }
             return commercials;
         }
-        public int Delete(string query)
-        {
-            SqlCommand cmd = new SqlCommand(query, con);
-            int deletedId = -1;
-            try
-            {
-                ConnectDB();
-                deletedId = cmd.ExecuteNonQuery();
-            }
-            catch (Exception)
-            {
-                return deletedId;
-            }
-            finally
-            {
-                DisconnectDB();
-            }
-            return deletedId;
-        }
+
 
         public bool Execute(string query)
         {

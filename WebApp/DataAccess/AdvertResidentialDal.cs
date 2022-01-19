@@ -13,7 +13,7 @@ namespace WebApp.DataAccess
         {
             get
             {
-                
+
                 return _current;
             }
         }
@@ -26,43 +26,44 @@ namespace WebApp.DataAccess
         public object Create(AdvertResidential advertResidential)
         {
 
-            //int insertedId =Convert.ToInt32( _residentialDal.Create(advertResidential.RealEstate));
-            Console.WriteLine("-----------------------------------");
+            int insertedId = Convert.ToInt32(_residentialDal.Create(advertResidential.RealEstate));
+
             string query = $"insert into Adverts (PublishDate,IsActive,Title,Explanation,UserId, ResidentialId,AdvertType) VALUES " +
-                $"('{advertResidential.PublishDate}','{advertResidential.IsActive}','{advertResidential.Title}','{advertResidential.Explaination}','{1}','{5}','{1}')" +
-                $";select CAST(scope_identity() as int);";
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine(query);
-            object insertedsId = DbTools.Connection.Create(query);
-            return insertedsId;
+                $"('{advertResidential.PublishDate.ToString("MM/dd/yyyy HH:MM")}','{advertResidential.IsActive}','{advertResidential.Title}','{advertResidential.Explaination}','{1}','{insertedId}','{1}');select CAST(scope_identity() as int);";
+
+            object Id = DbTools.Connection.Create(query);
+            return Id;
         }
 
-        public List<AdvertResidential> GetAdvertResidential()
-        {
-            string query = $"select * from Adverts where AdvertType={1}";
 
-            return DbTools.Connection.ReadAdvertResidentials(query);
+
+        public List<AdvertResidential> GetAdvertResidentials()
+        {
+            string query = $"select * from Adverts inner join Residentials on Adverts.ResidentialId= Residentials.ResidentialId;";
+
+
+            return DbTools.Connection.ReadAdvertices(query);
         }
         public AdvertResidential GetResidentialById(int id)
         {
-            string query = $"select * from Adverts where Id ={id};";
+            string query = $"select * from Adverts where AdverticeId ={id};";
             return DbTools.Connection.ReadAdvertResidentials(query)[0];
         }
         public bool Update(AdvertResidential advertResidential)
         {
             int insertedId = Convert.ToInt32(_residentialDal.Update(advertResidential.RealEstate));
 
-            string query = $"Update Adverts set PublishDate='{advertResidential.PublishDate}',IsActive='{advertResidential.IsActive}',Title='{advertResidential.Title}',Explanation='{advertResidential.Explaination}',UserId='{advertResidential.User.Id}', ResidentialId='{ insertedId}',AdvertType='{1}') where Id={advertResidential.AdvertiseId}" +
-                
+            string query = $"Update Adverts set PublishDate='{advertResidential.PublishDate}',IsActive='{advertResidential.IsActive}',Title='{advertResidential.Title}',Explanation='{advertResidential.Explaination}',UserId='{advertResidential.User.Id}', ResidentialId='{ insertedId}',AdvertType='{1}') where Id={advertResidential.AdverticeId}" +
+
                 $";select CAST(scope_identity() as int);";
 
             return DbTools.Connection.Execute(query);
         }
         public bool Delete(AdvertResidential advertResidential)
         {
-            
-            _residentialDal.Delete(advertResidential.RealEstate);
-            string query = $"Delete from Adverts where Id ={advertResidential.AdvertiseId};";
+
+            _residentialDal.Delete(advertResidential.RealEstate.RealEstateId);
+            string query = $"Delete from Adverts where AdverticeId ={advertResidential.AdverticeId};";
             return DbTools.Connection.Execute(query);
         }
 

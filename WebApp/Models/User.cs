@@ -13,7 +13,7 @@ namespace WebApp.Models
         public string Password { get; set; }
         public string PhoneNumber { get; set; }
         public string ProfilPicUrl { get; set; }
-        public HttpPostedFileBase ProfilePic { get; set; }
+       // public HttpPostedFileBase ProfilePic { get; set; }
         public Address Address { get; set; }
     }
 }

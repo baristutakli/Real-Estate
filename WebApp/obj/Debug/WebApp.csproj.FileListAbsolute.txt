@@ -65,8 +65,8 @@ C:\Users\kbez1\Documents\kodlar\Real Estate\WebApp\bin\System.Web.Webpages.Razor
 C:\Users\kbez1\Documents\kodlar\Real Estate\WebApp\bin\System.Web.Helpers.xml
 C:\Users\kbez1\Documents\kodlar\Real Estate\WebApp\bin\System.Web.Mvc.xml
 C:\Users\kbez1\Documents\kodlar\Real Estate\WebApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\kbez1\Documents\kodlar\Real Estate\WebApp\obj\Debug\WebApp.csproj.AssemblyReference.cache
 C:\Users\kbez1\Documents\kodlar\Real Estate\WebApp\obj\Debug\WebApp.csproj.CoreCompileInputs.cache
 C:\Users\kbez1\Documents\kodlar\Real Estate\WebApp\obj\Debug\WebApp.csproj.CopyComplete
 C:\Users\kbez1\Documents\kodlar\Real Estate\WebApp\obj\Debug\WebApp.dll
 C:\Users\kbez1\Documents\kodlar\Real Estate\WebApp\obj\Debug\WebApp.pdb
-C:\Users\kbez1\Documents\kodlar\Real Estate\WebApp\obj\Debug\WebApp.csproj.AssemblyReference.cache

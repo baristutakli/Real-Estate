@@ -24,7 +24,7 @@ namespace ConsoleApp1.DataAccess
         public object Create(Residential residential)
         {
 
-            string query = $"INSERT INTO Residentials (SellType,Square, Age, FloorNumber,Heating,Balcony,Furnished,AddressId,ResidentialType) VALUES" +
+            string query = $"INSERT INTO Residentials (SellType,Area, Age, FloorNumber,Heating,Balcony,Furnished,AddressId,ResidentialType) VALUES" +
                 $"('{ Convert.ToInt16( residential.SellType)}','{residential.Square}','{residential.Age}','{residential.FloorNumber}','{Convert.ToInt16(residential.Heating)}','{residential.Balcony}','{residential.Furnished}','{residential.AddressId}','{Convert.ToInt16(residential.ResidentialType)}');select CAST(scope_identity() as int);";
 
             object insertedsId = DbTools.Connection.Create(query);

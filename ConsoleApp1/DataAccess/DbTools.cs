@@ -83,7 +83,7 @@ namespace ConsoleApp1.DataAccess
 
         public List<AdvertResidential> ReadAdvertResidentials(string query)
         {
-            
+
             List<AdvertResidential> advertResidentials = new List<AdvertResidential>();
             SqlCommand cmd = new SqlCommand(query, con);
             IDataReader reader;
@@ -97,17 +97,16 @@ namespace ConsoleApp1.DataAccess
 
                         new AdvertResidential
                         {
-                            AdverticeId = int.Parse(reader["Id"].ToString()),
+                            AdverticeId = int.Parse(reader["AdverticeId"].ToString()),
                             PublishDate = DateTime.Parse(reader["PublishDate"].ToString()),
                             IsActive = bool.Parse(reader["IsActive"].ToString()),
                             Title = reader["Title"].ToString(),
                             Explaination = reader["Explanation"].ToString(),
                             UserId = int.Parse(reader["UserId"].ToString()),
 
-                            
                             ResidentalId = int.Parse(reader["ResidentialId"].ToString()),
                             AdvertType = (AdvertType)short.Parse(reader["AdvertType"].ToString()),
-                          
+
                         }
 
                         );
@@ -145,18 +144,20 @@ namespace ConsoleApp1.DataAccess
                             Title = reader["Title"].ToString(),
                             Explaination = reader["Explanation"].ToString(),
                             UserId = int.Parse(reader["UserId"].ToString()),
-                            RealEstate =new Residential { RealEstateId=int.Parse( reader["ResidentialId"].ToString()),
-                              SellType= (SellType)Convert.ToInt16( reader["SellType"].ToString()),
-                                Square= Convert.ToDouble( reader["Area"].ToString()),
-                                 Age= Convert.ToInt16(reader["Age"].ToString()),
-                                  FloorNumber= Convert.ToInt16(reader["FloorNumber"].ToString()),
-                                   Heating= (HeatingType)Convert.ToInt16(reader["Heating"].ToString()),
-                                    Balcony= bool.Parse(reader["Balcony"].ToString()),
-                                    Furnished= bool.Parse(reader["Furnished"].ToString()),
-                                    AddressId = int.Parse(reader["AddressId"].ToString()),
-                                    ResidentialType= (ResidentialType)Convert.ToInt16(reader["ResidentialType"].ToString())
+                            RealEstate = new Residential
+                            {
+                                RealEstateId = int.Parse(reader["ResidentialId"].ToString()),
+                                SellType = (SellType)Convert.ToInt16(reader["SellType"].ToString()),
+                                Square = Convert.ToDouble(reader["Area"].ToString()),
+                                Age = Convert.ToInt16(reader["Age"].ToString()),
+                                FloorNumber = Convert.ToInt16(reader["FloorNumber"].ToString()),
+                                Heating = (HeatingType)Convert.ToInt16(reader["Heating"].ToString()),
+                                Balcony = bool.Parse(reader["Balcony"].ToString()),
+                                Furnished = bool.Parse(reader["Furnished"].ToString()),
+                                AddressId = int.Parse(reader["AddressId"].ToString()),
+                                ResidentialType = (ResidentialType)Convert.ToInt16(reader["ResidentialType"].ToString())
                             },
-                            
+
                             ResidentalId = int.Parse(reader["ResidentialId"].ToString()),
                             AdvertType = (AdvertType)short.Parse(reader["AdvertType"].ToString()),
 
@@ -219,7 +220,7 @@ namespace ConsoleApp1.DataAccess
             }
             return residentials;
         }
-       
+
         public List<Land> ReadLand(string query)
         {
             List<Land> lands = new List<Land>();
