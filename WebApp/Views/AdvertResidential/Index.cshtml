@@ -15,6 +15,38 @@
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
+
+
+
+    <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative;">
+
+        @foreach (var item in Model)
+        {
+            <span class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3" style=" display: inline-block;">
+                <div class="col">
+                    <div class="card h-100 shadow-sm" style=" display: inline-block;">
+                        <img src="https://images.pexels.com/photos/262405/pexels-photo-262405.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="card-img-top" style="height:250px;width:250px;" alt="...">
+                        <div class="card-body">
+                            <div class="clearfix mb-3"> <span class="float-start badge rounded-pill .bg-info text-dark">Available: @item.IsActive</span> <span class="float-end price-hp">1000€</span> </div>
+                            <h5 class="card-title">@item.Title</h5>
+                            <p class="text-body">@item.Explaination<br />M2: @item.Square</p>
+                            <div class="text-center my-4"> <a href="#" class="btn btn-warning">Check offer</a> </div>
+                        </div>
+                    </div>
+                </div>
+
+            </span>
+        }
+    </div>
+    
+
+
+
+
+
+
+
+    <br />
     <table class="table">
         <tr>
             <th>
@@ -40,38 +72,41 @@
             </th>
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublishDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Explaination)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Square)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Balcony)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Furnished)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-    }
-    
+
+
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PublishDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Explaination)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Square)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Balcony)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Furnished)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+
     </table>
 </body>
 </html>
