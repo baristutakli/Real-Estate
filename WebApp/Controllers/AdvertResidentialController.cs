@@ -21,6 +21,7 @@ namespace WebApp.Controllers
 
             advertResidentials.ForEach(ad=>
                 adverticeViewModels.Add(new AdverticeViewModel { 
+                 AdverticeId=ad.AdverticeId,
                  PublishDate=ad.PublishDate,
                  IsActive=ad.IsActive,
                  Title=ad.Title,
@@ -46,7 +47,31 @@ namespace WebApp.Controllers
         // GET: AdvertResidential/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            AdvertResidentialDal advertiesment = new AdvertResidentialDal(new ResidentialDal());
+            var result = advertiesment.GetResidentialById(id);
+            AdverticeViewModel vm;
+            vm = new AdverticeViewModel()
+            {
+
+                AdverticeId = result.AdverticeId,
+                PublishDate = result.PublishDate,
+                IsActive = result.IsActive,
+                Title = result.Title,
+                Explaination = result.Explaination,
+                Square = result.RealEstate.Square,
+                Balcony = result.RealEstate.Balcony,
+                Furnished = result.RealEstate.Furnished,
+                AddressId = result.RealEstate.AddressId,
+                Age = result.RealEstate.Age,
+                FloorNumber = result.RealEstate.FloorNumber,
+                Heating = result.RealEstate.Heating,
+                SellType = result.RealEstate.SellType,
+                ResidentialType = result.RealEstate.ResidentialType
+
+
+            };
+            
+            return View(vm);
         }
 
         // GET: AdvertResidential/Create

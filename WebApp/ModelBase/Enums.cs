@@ -21,8 +21,8 @@ namespace WebApp.ModelBase
     }
     public enum SellType
     {
-        ForSale,
-        ForRent
+        ForSale=1,
+        ForRent=2
     }
     public enum ZoningStatus
     {

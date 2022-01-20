@@ -22,7 +22,7 @@
 
         @foreach (var item in Model)
         {
-            <span class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3" style=" display: inline-block;">
+            <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3" style=" display: inline-block;">
                 <div class="col">
                     <div class="card h-100 shadow-sm" style=" display: inline-block;">
                         <img src="https://images.pexels.com/photos/262405/pexels-photo-262405.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" class="card-img-top" style="height:250px;width:250px;" alt="...">
@@ -30,12 +30,13 @@
                             <div class="clearfix mb-3"> <span class="float-start badge rounded-pill .bg-info text-dark">Available: @item.IsActive</span> <span class="float-end price-hp">1000€</span> </div>
                             <h5 class="card-title">@item.Title</h5>
                             <p class="text-body">@item.Explaination<br />M2: @item.Square</p>
-                            <div class="text-center my-4"> <a href="#" class="btn btn-warning">Check offer</a> </div>
+                            
+                            <div class="text-center my-4"> @Html.ActionLink("Check offer", "Details", new { id = item.AdverticeId }, new { @class = "btn btn-warning" }) </div>
                         </div>
                     </div>
                 </div>
 
-            </span>
+            </div>
         }
     </div>
     
@@ -101,7 +102,7 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new {  id=item.AdverticeId  }) |
                     @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                 </td>
             </tr>

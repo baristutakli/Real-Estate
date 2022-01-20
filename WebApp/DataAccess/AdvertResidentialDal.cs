@@ -46,8 +46,8 @@ namespace WebApp.DataAccess
         }
         public AdvertResidential GetResidentialById(int id)
         {
-            string query = $"select * from Adverts where AdverticeId ={id};";
-            return DbTools.Connection.ReadAdvertResidentials(query)[0];
+            string query = $"select * from Adverts inner join Residentials on Adverts.ResidentialId= Residentials.ResidentialId where AdverticeId ={id};";
+            return DbTools.Connection.ReadAdvertices(query)[0];
         }
         public bool Update(AdvertResidential advertResidential)
         {
