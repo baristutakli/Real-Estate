@@ -16,25 +16,26 @@ namespace WebApp.Controllers
         public ActionResult Index()
         {
             AdvertResidentialDal advertiesment = new AdvertResidentialDal(new ResidentialDal());
-            List<AdvertResidential> advertResidentials= advertiesment.GetAdvertResidentials();
+            List<AdvertResidential> advertResidentials = advertiesment.GetAdvertResidentials();
             List<AdverticeViewModel> adverticeViewModels = new List<AdverticeViewModel>();
 
-            advertResidentials.ForEach(ad=>
-                adverticeViewModels.Add(new AdverticeViewModel { 
-                 AdverticeId=ad.AdverticeId,
-                 PublishDate=ad.PublishDate,
-                 IsActive=ad.IsActive,
-                 Title=ad.Title,
-                 Explaination=ad.Explaination,
-                 Square=ad.RealEstate.Square,
-                 Balcony=ad.RealEstate.Balcony,
-                 Furnished=ad.RealEstate.Furnished    
+            advertResidentials.ForEach(ad =>
+                adverticeViewModels.Add(new AdverticeViewModel
+                {
+                    AdverticeId = ad.AdverticeId,
+                    PublishDate = ad.PublishDate,
+                    IsActive = ad.IsActive,
+                    Title = ad.Title,
+                    Explaination = ad.Explaination,
+                    Square = ad.RealEstate.Square,
+                    Balcony = ad.RealEstate.Balcony,
+                    Furnished = ad.RealEstate.Furnished
                 })
-            
-            
+
+
             );
 
-         
+
 
 
 
@@ -50,72 +51,103 @@ namespace WebApp.Controllers
             AdvertResidentialDal advertiesment = new AdvertResidentialDal(new ResidentialDal());
             var result = advertiesment.GetResidentialById(id);
             AdverticeViewModel vm;
-            vm = new AdverticeViewModel()
+            try
+            {
+                vm = new AdverticeViewModel()
+                {
+
+                    AdverticeId = result.AdverticeId,
+                    PublishDate = result.PublishDate,
+                    IsActive = result.IsActive,
+                    Title = result.Title,
+                    Explaination = result.Explaination,
+                    Square = result.RealEstate.Square,
+                    Balcony = result.RealEstate.Balcony,
+                    Furnished = result.RealEstate.Furnished,
+                    AddressId = result.RealEstate.AddressId,
+                    Age = result.RealEstate.Age,
+                    FloorNumber = result.RealEstate.FloorNumber,
+                    Heating = result.RealEstate.Heating,
+                    SellType = result.RealEstate.SellType,
+                    ResidentialType = result.RealEstate.ResidentialType
+
+
+                };
+
+            }
+            catch (Exception)
             {
 
-                AdverticeId = result.AdverticeId,
-                PublishDate = result.PublishDate,
-                IsActive = result.IsActive,
-                Title = result.Title,
-                Explaination = result.Explaination,
-                Square = result.RealEstate.Square,
-                Balcony = result.RealEstate.Balcony,
-                Furnished = result.RealEstate.Furnished,
-                AddressId = result.RealEstate.AddressId,
-                Age = result.RealEstate.Age,
-                FloorNumber = result.RealEstate.FloorNumber,
-                Heating = result.RealEstate.Heating,
-                SellType = result.RealEstate.SellType,
-                ResidentialType = result.RealEstate.ResidentialType
+                throw;
+            }
+           
 
-
-            };
-            
             return View(vm);
         }
 
         // GET: AdvertResidential/Create
         public ActionResult Create()
         {
-            return View();
+            AdverticeViewModel vm = new AdverticeViewModel();
+            return View(vm);
         }
 
         // POST: AdvertResidential/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(AdverticeViewModel adverticeViewModel)
         {
+            AdvertResidentialDal advertiesment = new AdvertResidentialDal(new ResidentialDal());
+            AdvertResidential advertice;
+            advertice = new AdvertResidential()
+            {
+                PublishDate = adverticeViewModel.PublishDate,
+                IsActive = adverticeViewModel.IsActive,
+                Title = adverticeViewModel.Title,
+                Explaination = adverticeViewModel.Explaination,
+                AdvertType = adverticeViewModel.AdvertType,
+                RealEstate = new Residential
+                {
+                    SellType = adverticeViewModel.SellType,
+                    Square = adverticeViewModel.Square,
+                    Age = adverticeViewModel.Age,
+                    Balcony = adverticeViewModel.Balcony,
+                    Furnished = adverticeViewModel.Furnished,
+                    Heating = adverticeViewModel.Heating,
+                    FloorNumber = adverticeViewModel.FloorNumber,
+                    AddressId = adverticeViewModel.AddressId,
+                    ResidentialType = adverticeViewModel.ResidentialType
+                }
+
+            };
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                advertiesment.Create(advertice);
             }
-            catch
+            catch (Exception)
             {
-                return View();
+
+                throw;
             }
+          
+
+
+
+            return RedirectToAction("Index");
         }
 
         // GET: AdvertResidential/Edit/5
         public ActionResult Edit(int id)
         {
+            AdvertResidentialDal advertiesment = new AdvertResidentialDal(new ResidentialDal());
+            advertiesment.GetResidentialById(id);
             return View();
         }
 
         // POST: AdvertResidential/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [HttpPut]
+        public ActionResult Edit(int id, AdverticeViewModel adverticeViewModel)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+           // Benzer işlemler tekrar edilecek
         }
 
         // GET: AdvertResidential/Delete/5
@@ -125,7 +157,7 @@ namespace WebApp.Controllers
         }
 
         // POST: AdvertResidential/Delete/5
-        [HttpPost]
+        [HttpDelete]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try

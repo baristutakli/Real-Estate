@@ -26,5 +26,10 @@ namespace WebApp.Models.ViewModels
         public bool Furnished { get; set; }
         public ResidentialType ResidentialType { get; set; }
         public int AddressId { get; set; }
+
+
+        
+ 
+    
     }
 }
