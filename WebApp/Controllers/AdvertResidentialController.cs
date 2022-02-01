@@ -147,7 +147,8 @@ namespace WebApp.Controllers
         [HttpPut]
         public ActionResult Edit(int id, AdverticeViewModel adverticeViewModel)
         {
-           // Benzer işlemler tekrar edilecek
+            // Benzer işlemler tekrar edilecek
+            return View();
         }
 
         // GET: AdvertResidential/Delete/5

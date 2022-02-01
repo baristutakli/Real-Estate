@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WebApp.Common;
 
 namespace WebApp.DataAccess
 {
@@ -23,11 +24,7 @@ namespace WebApp.DataAccess
         }
         public object Create(Residential residential)
         {
-
-            string query = $"INSERT INTO Residentials (SellType,Area, Age, FloorNumber,Heating,Balcony,Furnished,AddressId,ResidentialType) VALUES" +
-                $"('{ Convert.ToInt16( residential.SellType)}','{residential.Square}','{residential.Age}','{residential.FloorNumber}','{Convert.ToInt16(residential.Heating)}','{residential.Balcony}','{residential.Furnished}','{residential.AddressId}','{Convert.ToInt16(residential.ResidentialType)}');select CAST(scope_identity() as int);";
-
-            object insertedsId = DbTools.Connection.Create(query);
+            object insertedsId = DBTools.Connection.CreateResidential(StoreProcedureNames.CreateResidential, Convert.ToInt16(residential.SellType), residential.Square, residential.Age, residential.FloorNumber, Convert.ToInt16(residential.Heating), residential.Balcony, residential.Furnished, residential.AddressId, Convert.ToInt16(residential.ResidentialType));
             return insertedsId;
         }
 
@@ -35,26 +32,25 @@ namespace WebApp.DataAccess
 
         public List<Residential> GetResidential()
         {
-            string query = "select * from Residentials";
-
-            return DbTools.Connection.ReadResidentials(query);
+            return DBTools.Connection.ReadResidentials(StoreProcedureNames.SelectAllResidentials);
         }
         public Residential GetResidentialById(int id)
         {
-            string query = $"select * from Residentials where ResidentialId ={id};";
-            return DbTools.Connection.ReadResidentials(query)[0];
+           
+            return DBTools.Connection.ReadResidentialById(StoreProcedureNames.SelectResidentialById,id)[0];
         }
        
         public bool Update(Residential residential)
         {
-            string query = $"Update Residentials set SellType='{Convert.ToInt16(residential.SellType)}', Square='{residential.Square}',Age='{residential.Age}',FloorNumber='{residential.FloorNumber}',Heating='{Convert.ToInt16(residential.Heating)}',Balcony='{residential.Balcony}',Furnished='{residential.Furnished}',ResidentialType='{Convert.ToInt16(residential.ResidentialType)}',AddressId='{residential.AddressId}' where ResidentialId='{residential.RealEstateId}';";
-            return DbTools.Connection.Execute(query);
+
+            return DBTools.Connection.UpdateResidential(StoreProcedureNames.UpdateResidential,residential.RealEstateId, Convert.ToInt16(residential.SellType), residential.Square, residential.Age, residential.FloorNumber, Convert.ToInt16(residential.Heating), residential.Balcony, residential.Furnished, residential.AddressId, Convert.ToInt16(residential.ResidentialType));
         }
         public bool Delete(int id)
         {
-            string query = $"Delete from Residentials where ResidentialId ={id};";
-            return  DbTools.Connection.Execute(query);
+            
+            return  DBTools.Connection.DeleteResidential(StoreProcedureNames.DeleteResidentialById,id);
         }
+
 
 
 
